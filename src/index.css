@@ -1,3 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+*{
+  /* border: 1px solid red; */
+  /* height: 100; */
+  margin: 0;
+  padding: 0;
+  /* border: 0; */
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +26,63 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+#top_nav {
+  /* position: relative; or absolute, depending on your layout */
+  transition: all 0.8s ease-in-out; /* Smooth transition for any changes */
+  /* Other styling */
+}
+#top_nav .sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 100px;
+  /* Additional styling as needed */
+}
+
+
+#gmenu{
+  background-image: url('/src/assets/banner-3.jpg'), url('/src/assets/Banner_02.png');
+  background-position: left 40%, right 50%; /* First image on the left, second on the right */
+  background-repeat: no-repeat, no-repeat; /* To avoid repeating the images */
+  background-size: 20% , 50%; /* Adjust size as needed */
+  height: 400px; /* Set a height */
+  width: 100%; /* Set a width */
+}
+#menu{
+  background-image:  url('/src/assets/Banner_02.png');
+  background-position: center; /* First image on the left, second on the right */
+  background-repeat: no-repeat, no-repeat; /* To avoid repeating the images */
+  background-size: cover; /* Adjust size as needed */
+  /* Set a width */
+}
+
+
+#_menu_grid{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-start: 1;
+}
+
+
+#cart_table {
+  border-collapse: separate;
+  border-spacing: 30px;
+
+}
+
+#cart_table tr{
+  margin: 10px;
+  /* border: 1px solid; */
+}
+#dashboard_order_table {
+  border-collapse: collapse;
+  border-spacing: 20px;
+  
+}
+#dashboard_order_table tr{
+  margin: 10px;
 }
