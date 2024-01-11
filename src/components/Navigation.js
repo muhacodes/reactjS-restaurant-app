@@ -2,16 +2,18 @@ import React, { useEffect, useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { CartContext } from "../context/CartContext";
+import { useSelector } from "react-redux";
 
 function Navigation({ login }) {
   const [isSticky, setSticky] = useState(false);
-  const { cartItems } = useContext(CartContext);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  // const { cartItems } = useContext(CartContext);
   const [menuVisible, SetMenuVisible] = useState(false);
   const routes = ["/login", "/dashboard", "/register", "/order-success"];
   const location = useLocation();
   const route = location.pathname;
   const visible = routes.some((r) => route.startsWith(r));
-  console.log(visible);
+  // console.log(cartItems);
 
   const logo = "https://cafejavas.co.ug/root-assets/images/logo.png";
   const handleScroll = () => {

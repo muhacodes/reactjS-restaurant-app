@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 function Register() {
   const { updateAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const[formValid, setFormValid] = useState(false);
+  const [formValid, setFormValid] = useState(false);
   const [newError, setNewError] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +22,12 @@ function Register() {
 
   useEffect(() => {
     // console.log(formData);
-    if (formData.email.includes("@") && formData.password.length > 6 && formData.name && formData.address) {
+    if (
+      formData.email.includes("@") &&
+      formData.password.length > 6 &&
+      formData.name &&
+      formData.address
+    ) {
       setFormValid(true);
     } else {
       setFormValid(false);
@@ -96,6 +101,7 @@ function Register() {
             <div className="flex gap-2 my-4">
               <input
                 type="text"
+                required
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
@@ -113,8 +119,9 @@ function Register() {
               />
             </div>
             <input
-              type="text"
+              type="email"
               name="email"
+              required
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
@@ -124,12 +131,14 @@ function Register() {
             <input
               type="text"
               name="address"
+              required
               value={formData.address}
               onChange={handleChange}
               placeholder="Your address"
               className="px-6 w-[100%] my-2 py-4 border rounded-3xl focus:outline-none focus:border-gray-400 focus:shadow-sm"
             />
             <input
+              required
               type="password"
               name="password"
               onChange={handleChange}
@@ -160,7 +169,10 @@ function Register() {
               // </div>
             )}
             {newError && <span></span>}
-            <button className={` ${formValid ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-40'} bg-primary font-semibold text-lg rounded-full py-2 my-4 w-[100%]`}>
+            <button
+              className={` 
+              } bg-primary font-semibold text-lg rounded-full py-2 my-4 w-[100%]`}
+            >
               {loading ? (
                 <i class="fa  fa-spinner fa-spin text-green-600"></i>
               ) : (
@@ -173,7 +185,7 @@ function Register() {
             Have an account?{" "}
             <Link className="hover:text-primary" to="/login">
               {" "}
-              Sign In{" "}
+              Login{" "}
             </Link>{" "}
           </span>
         </div>

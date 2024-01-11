@@ -5,9 +5,11 @@ import FeaturedProducts from "../components/FeaturedProducts";
 import Modal from "../components/ProductItemModal";
 import { useParams } from "react-router-dom";
 import config from "../Config";
-import ProductGridContainer from "../components/ProductGridContainer";
+// import ProductGridContainer from "../components/ProductGridContainer";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const Auth = useSelector((state) => state.auth.userData);
   const [menu, SetMenu] = useState([]);
   const [product, SetProduct] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +50,61 @@ function Home() {
     return description;
   }
 
+  // const addFavorite = async (item) => {
+  //   const hasProperties = Object.keys(Auth).length > 0;
+  //   if (hasProperties) {
+  //     try {
+  //       const UserData = {
+  //         ...Auth,
+  //         user: {
+  //           ...Auth.user,
+  //           favorite: [...Auth.user.favorite, item],
+  //         },
+  //       };
+  //       // console.log(UserData);
+
+  //       const response = await fetch(
+  //         `${config.appUrl}/api/users/${Auth.user.id}/`,
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Token ${Auth.token}`,
+  //           },
+  //           body: JSON.stringify(UserData),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         const responseData = await response.json();
+  //         if (response.status === 401) {
+  //           console.log(responseData);
+  //         } else {
+  //         }
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+
+  //       const res = await response.json();
+  //       console.log(res)
+  //       // const _data = {
+  //       //   ...Auth,
+  //       //   user: {
+  //       //     ...Auth.user,
+  //       //     favorite: [...Auth.user.favorite, item]
+  //       //   },
+  //       // };
+  //       // console.log(_data);
+
+  //       // dispatch(AuthActions.initialLogin(_data));
+  //       // localStorage.setItem("auth", JSON.stringify(_data));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     alert("Please Login");
+  //   }
+  // };
+
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -87,16 +144,37 @@ function Home() {
               key={index}
               className="relative flex flex-col items-start shadow-2xl lg:shadow-lg hover:shadow-2xl text-start"
             >
-              <img
-                className="h-[180px] md:h-[250px] w-full"
-                src={item.image_url}
-              />
+              <div className="relative w-full group ">
+                <img
+                  className="h-[180px] md:h-[250px] w-full"
+                  src={item.image_url}
+                />
+                <div className="absolute inset-0 flex items-center justify-center visible transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                  <i className="text-2xl text-red-500 fas fa-heart"></i>
+                </div>
+              </div>
               <div className="flex flex-col px-2 py-4 lg:px-6 lg:py-10">
                 <span className="font-medium"> {item.title} </span>
                 <p className="my-2 text-sm text-gray-500">
                   {truncateDescription(item.description, 10)}
                 </p>
                 <div className="flex items-center justify-between mt-5">
+                  {/* <div>
+                    <button
+                      onClick={() => {
+                        addCartModal(item);
+                      }}
+                      className="px-4 py-2 border"
+                    >
+                      <i class="fas  text-primary fa-shopping-cart"></i>
+                    </button>
+                    <button
+                      onClick={() => addFavorite(item)}
+                      className="px-4 py-2 border"
+                    >
+                      <i class="fas text-red-600 fa-heart"></i>
+                    </button>
+                  </div> */}
                   <button
                     onClick={() => {
                       addCartModal(item);

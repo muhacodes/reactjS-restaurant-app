@@ -1,8 +1,10 @@
 import React, { Context, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
 
 function Order() {
-  const { Auth } = useContext(AuthContext);
+  // const { Auth } = useContext(AuthContext);
+  const Auth = useSelector((state) => state.auth.userData)
   return (
     <>
       <span className="mb-4 text-3xl font-bold "> Order </span>

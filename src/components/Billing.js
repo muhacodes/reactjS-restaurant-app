@@ -4,10 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import config from '../Config';
 import {AuthContext} from '../context/AuthContext';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { CartActions } from "../store/cart/cart";
 
 function Billing() {
-  const { totalAmount, cartItems } = useContext(CartContext);
-  const {Auth} = useContext(AuthContext);
+  const dispatch = useDispatch();
+  // const { totalAmount, cartItems } = useContext(CartContext);
+  const {cartItems,  Total} = useSelector((state) => state.cart);
+  // const {Auth} = useContext(AuthContext);
+  const Auth = useSelector((state) => state.auth.userData)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -48,7 +54,7 @@ function Billing() {
       Name: name,
       email,
       address,
-      total: totalAmount,
+      total: Total,
       quantity: 100,
       user : Auth.user.id
     };
@@ -63,7 +69,7 @@ function Billing() {
         },
         body: JSON.stringify(_orderItem),
       });
-      console.log(response);
+      // console.log(response);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -71,6 +77,7 @@ function Billing() {
 
       const responseData = await response.json();
       setLoading(false);
+      dispatch(CartActions.clearCart())
       navigate('/order-success');
       // Handle the response data as needed
       console.log("Order placed successfully:", responseData);
@@ -154,7 +161,7 @@ function Billing() {
             <ul className="p-5">
               <li className="flex justify-between py-2 my-4 border-b border-gray-400 ">
                 {" "}
-                <span>Subtotal</span> <span> {totalAmount} </span>{" "}
+                <span>Subtotal</span> <span> {Total} </span>{" "}
               </li>
               <li className="flex justify-between py-2 my-4 border-b border-gray-400 ">
                 {" "}
@@ -167,7 +174,7 @@ function Billing() {
               <li className="flex justify-between py-2 my-4 border-b border-gray-400 ">
                 {" "}
                 <span className="font-extrabold"> Total </span>{" "}
-                <span className="font-extrabold"> {totalAmount} </span>{" "}
+                <span className="font-extrabold"> {Total} </span>{" "}
               </li>
             </ul>
           </div>

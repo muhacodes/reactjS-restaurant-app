@@ -9,7 +9,8 @@ function Menu() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    // logout();
+    localStorage.removeItem("auth");
     navigate("/login");
   };
 

@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import {AuthContext} from '../context/AuthContext';
+import { AuthContext } from "../context/AuthContext";
 import config from "../Config";
 
+import { useDispatch } from "react-redux";
+
+import { AuthActions } from "../store/auth/auth";
+
 function Login() {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const {updateAuth} = useContext(AuthContext);
-  const[formValid, setFormValid] = useState(false);
+  const { updateAuth } = useContext(AuthContext);
+  const [formValid, setFormValid] = useState(false);
   const location = useLocation();
   // const signIn = useSignIn();
   // const signIn = useSignIn()
@@ -21,13 +26,12 @@ function Login() {
 
   useEffect(() => {
     // console.log(formData);
-    if(formData.email.includes('@') && formData.password.length > 6){
+    if (formData.email.includes("@") && formData.password.length > 6) {
       setFormValid(true);
-    }else{
-      setFormValid(false)
+    } else {
+      setFormValid(false);
     }
-    
-  }, [formData])
+  }, [formData]);
 
   const handleChange = (e) => {
     SetError([]);
@@ -51,8 +55,6 @@ function Login() {
         body: JSON.stringify(formData),
       });
 
-      console.log(response);
-
       if (!response.ok) {
         const responseData = await response.json();
         if (response.status === 401) {
@@ -64,8 +66,10 @@ function Login() {
       }
 
       const res = await response.json();
-      updateAuth(res);
+      // updateAuth(res);
       setLoading(false);
+      dispatch(AuthActions.initialLogin(res));
+      localStorage.setItem("auth", JSON.stringify(res));
       location?.state !== null ? navigate(location.state) : navigate("/cart");
       // navigate("/dashboard/profile");
     } catch (error) {
@@ -137,7 +141,13 @@ function Login() {
               // </div>
             )}
 
-            <button className={` ${formValid ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-25'} bg-primary rounded-full py-2 my-4 w-[100%]`}>
+            <button
+              className={` ${
+                formValid
+                  ? "pointer-events-auto opacity-100"
+                  : "pointer-events-none opacity-25"
+              } bg-primary rounded-full py-2 my-4 w-[100%]`}
+            >
               {loading ? (
                 <i className="text-green-600 fa fa-spinner fa-spin"></i>
               ) : (

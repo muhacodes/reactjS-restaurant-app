@@ -1,11 +1,20 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { CartActions } from "../store/cart/cart";
 
 function CartGrid() {
-  const { cartItems, removeItemFromCart, incrementQuantity, totalAmount } =
-    useContext(CartContext);
+  // const { cartItems, removeItemFromCart, incrementQuantity, totalAmount } =
+  //   useContext(CartContext);
+
+  const dispatch = useDispatch();
+  // const { cartItems, Total } = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const Total = useSelector((state) => state.cart.Total);
   const [loading, setLoading] = useState(false);
+  // console.log('hey there')
+  // console.log(cartItems);
 
   return (
     <>
@@ -14,22 +23,25 @@ function CartGrid() {
           <table class="min-w-full text-left   text-sm font-light">
             <thead class=" bg-secondary font-mediumn text-white dark:border-neutral-500 dark:text-neutral-800">
               <tr>
-                <th scope="col" class="hidden lg:table-cell text-white px-6 py-4">
+                <th
+                  scope="col"
+                  class="hidden lg:table-cell text-white px-6 py-4"
+                >
                   #
                 </th>
-                <th scope="col" class="text-black px-6 py-4">
+                <th scope="col" class="text-black font-bold lg:text-lg px-6 py-4">
                   ProductDetails
                 </th>
-                <th scope="col" class="text-black px-6 py-4">
+                <th scope="col" class="text-black font-bold lg:text-lg px-6 py-4">
                   Price
                 </th>
-                <th scope="col" class="text-black px-6 py-4">
+                <th scope="col" class="text-black font-bold lg:text-lg px-6 py-4">
                   Quantity
                 </th>
-                <th scope="col" class="text-black px-6 py-4">
+                <th scope="col" class="text-black font-bold lg:text-lg px-6 py-4">
                   Subtotal
                 </th>
-                <th scope="col" class="text-black px-6 py-4">
+                <th scope="col" class="text-black font-bold lg:text-lg px-6 py-4">
                   Action
                 </th>
               </tr>
@@ -73,7 +85,7 @@ function CartGrid() {
                   <td className="px-6 py-4 align-middle"> {item.subtotal} </td>
                   <td className="px-6 py-4 align-middle">
                     <i
-                      onClick={() => removeItemFromCart(item)}
+                      onClick={() => dispatch(CartActions.removeCartItem(item))}
                       className="cursor-pointer fa fa-times text-primary"
                       aria-hidden="true"
                     ></i>
@@ -165,7 +177,7 @@ function CartGrid() {
             <ul className="p-5">
               <li className="flex justify-between w-full my-2">
                 {" "}
-                <span>Subtotal</span> <span> {totalAmount} </span>{" "}
+                <span>Subtotal</span> <span> {Total} </span>{" "}
               </li>
               <li className="flex justify-between my-2">
                 {" "}

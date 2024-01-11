@@ -6,26 +6,28 @@ function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  useEffect(() => {
-    const savedCartItems = localStorage.getItem("cartItems");
-    if (savedCartItems) {
-      const deserializedCartItems = JSON.parse(savedCartItems);
-      setCartItems(deserializedCartItems);
-    }
+  // useEffect(() => {
+  //   const savedCartItems = localStorage.getItem("cartItems");
+  //   if (savedCartItems) {
+  //     const deserializedCartItems = JSON.parse(savedCartItems);
+  //     setCartItems(deserializedCartItems);
+  //   }
     
-  }, []);
+  // }, []);
 
-  useEffect(() => {
-    const serializedCartItems = JSON.stringify(cartItems);
-    localStorage.setItem("cartItems", serializedCartItems);
+  // useEffect(() => {
+    
+  //   const serializedCartItems = JSON.stringify(cartItems);
+  //   localStorage.setItem("cartItems", serializedCartItems);
+  //   console.log('runnning once');
 
-    // Calculate the total amount whenever cartItems changes
-    const newTotalAmount = cartItems.reduce((total, item) => {
-      return total + (item.subtotal || 0);
-    }, 0);
-    setTotalAmount(newTotalAmount);
+  //   // Calculate the total amount whenever cartItems changes
+  //   const newTotalAmount = cartItems.reduce((total, item) => {
+  //     return total + (item.subtotal || 0);
+  //   }, 0);
+  //   setTotalAmount(newTotalAmount);
 
-  }, [cartItems]);
+  // }, [cartItems]);
 
   const addItemToCart = (item) => {
     // alert('addog');

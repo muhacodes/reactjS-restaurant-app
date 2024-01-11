@@ -22,7 +22,41 @@ import Protected from "./components/Protected";
 
 import AuthProvider from "./context/AuthContext";
 import Featured from "./Pages/Featured";
+
+import {useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { CartActions } from "./store/cart/cart";
+
+let initialRender = true;
 function App() {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
+  useEffect(() => {
+    const savedCartItems = localStorage.getItem("cartItems");
+    // if(savedCartItems || savedCartItems === "undefined"){
+    //   console.log('item there');
+    // }else{
+    //   console.log('item not there');
+    // }
+    
+    if (savedCartItems || savedCartItems === "undefined") {
+      const cartItems = JSON.parse(savedCartItems);
+      dispatch(CartActions.addItemToCart(cartItems));
+      // console.log(savedCartItems);
+      // console.log(cartItems);
+    }
+  }, []);
+
+  useEffect(() => {
+    if(initialRender){
+      initialRender = false
+      return;
+    }
+    const _CartItems = JSON.stringify(cartItems);
+    localStorage.setItem("cartItems", _CartItems);
+    // console.log('g');
+  }, [cartItems]);
   return (
     <AuthProvider>
       <CartProvider>

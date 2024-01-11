@@ -1,9 +1,11 @@
 import React, { Context, useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Modal from "../ProductItemModal";
+import { useSelector } from "react-redux";
 
 function Favorite() {
-  const { Auth } = useContext(AuthContext);
+  // const { Auth } = useContext(AuthContext);
+  const Auth = useSelector((state) => state.auth.userData)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const[product, SetProduct] = useState({});
 

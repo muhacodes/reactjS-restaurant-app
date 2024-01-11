@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import { useDispatch } from "react-redux";
 import { CartContext } from "../context/CartContext";
+import { CartActions } from "../store/cart/cart";
 const Modal = ({ isOpen, onClose, productItem }) => {
+  const dispatch = useDispatch();
   const { addItemToCart } = useContext(CartContext);
   const [selections, setSelections] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -84,7 +86,8 @@ const Modal = ({ isOpen, onClose, productItem }) => {
         quantity: 1,
       };
       
-      addItemToCart(_item);
+      // addItemToCart(_item);
+      dispatch(CartActions.addItemToCart(_item));
       alert('Item added to cart succesfuly');
       onClose();
       

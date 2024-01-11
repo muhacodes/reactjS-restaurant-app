@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
     if (authStr) {
       const auth = JSON.parse(authStr);
       if (auth.expires && new Date(auth.expires) > new Date()) {
-        setAuth(auth);
+        // setAuth(auth);
       } else {
         // If token expired, remove from storage and re-render without authorization
         localStorage.removeItem("auth");
